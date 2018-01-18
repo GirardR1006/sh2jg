@@ -10,8 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.example.binary.follow.me.configuration.FollowMeConfiguration;
+
 @SuppressWarnings("rawtypes")
-public class BinaryFollowMeImpl implements DeviceListener{
+public class BinaryFollowMeImpl implements DeviceListener, FollowMeConfiguration {
 
 	/** Field for presenceSensors dependency */
 	private PresenceSensor[] presenceSensors;
@@ -290,6 +292,17 @@ public class BinaryFollowMeImpl implements DeviceListener{
 	}
 
 	public void deviceRemoved(GenericDevice arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public int getMaximumNumberOfLightsToTurnOn() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public void setMaximumNumberOfLightsToTurnOn(
+			int maximumNumberOfLightsToTurnOn) {
 		// TODO Auto-generated method stub
 		
 	}

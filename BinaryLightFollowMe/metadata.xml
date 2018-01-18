@@ -15,6 +15,7 @@
       <callback method="bindDimmerLight" type="bind"/>
       <callback method="unbindDimmerLight" type="unbind"/>
     </requires>
+    <provides specifications="com.example.binary.follow.me.configuration.FollowMeConfiguration"/>
   </component>
   <instance component="BinaryFollowMe" name="my.first.follow.me"/>
 </ipojo>
