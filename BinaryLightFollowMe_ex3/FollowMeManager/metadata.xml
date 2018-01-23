@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ipojo xmlns="org.apache.felix.ipojo">
+  <component classname="" name="FollowMeManager">
+    <requires aggregate="true" specification="com.example.binary.follow.me.configuration.FollowMeConfiguration" field="followMeConfiguration">
+      <callback method="bindFollowMeConfiguration" type="bind"/>
+      <callback method="unbindFollowMeConfiguration" type="unbind"/>
+    </requires>
+    <provides specifications="org.example.follow.me.manager.FollowMeAdministration"/>
+  </component>
+</ipojo>

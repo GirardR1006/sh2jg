@@ -22,19 +22,4 @@
          *            the new maximum number of lights to turn on
          */
         public void setMaximumNumberOfLightsToTurnOn(int maximumNumberOfLightsToTurnOn);
-        
-        /**
-         * Gets the maximum allowed energy consumption in Watts in each room
-         * 
-         * @return the maximum energy consumption in Watts/hours in each room
-         */
-        public double getMaximumAllowedEnergyInRoom();
-        
-        /**
-         * Sets the maximum allowed energy consumption in Watts in each room
-         * 
-         * @param maximumEnergy
-         *            the maximum allowed energy consumption in Watts/hours in each room
-         */
-        public void setMaximumAllowedEnergyInRoom(double maximumEnergy);
     }

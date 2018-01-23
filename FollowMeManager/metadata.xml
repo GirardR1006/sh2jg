@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ipojo xmlns="org.apache.felix.ipojo">
-  <component name="FollowMeManager">
-    <requires aggregate="true" specification="com.example.binary.follow.me.configuration.FollowMeConfiguration" field="followMeConfiguration">
-      <callback method="bindFollowMeConfiguration" type="bind"/>
-      <callback method="unbindFollowMeConfiguration" type="unbind"/>
-    </requires>
+  <component classname="org.example.follow.me.manager.impl.FollowMeManagerImpl" name="FollowMeManager">
+    <requires specification="com.example.binary.follow.me.configuration.FollowMeConfiguration" field="followMeConfiguration"/>
     <provides specifications="org.example.follow.me.manager.FollowMeAdministration"/>
   </component>
+  <instance component="FollowMeManager" name="my.first.follow.me.manager"/>
 </ipojo>

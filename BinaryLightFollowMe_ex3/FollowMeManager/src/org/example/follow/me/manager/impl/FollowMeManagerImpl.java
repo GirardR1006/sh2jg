@@ -3,7 +3,6 @@ package org.example.follow.me.manager.impl;
 import java.util.Map;
 
 import org.apache.felix.ipojo.annotations.Requires;
-import org.example.follow.me.manager.EnergyGoal;
 import org.example.follow.me.manager.FollowMeAdministration;
 import org.example.follow.me.manager.IlluminanceGoal;
 
@@ -13,7 +12,8 @@ import com.example.binary.follow.me.configuration.FollowMeConfiguration;
 public class FollowMeManagerImpl implements FollowMeAdministration {
 
 	// Declare a dependency to a FollowMeConfiguration service
-    private FollowMeConfiguration followMeConfiguration;
+    
+    private FollowMeConfiguration config;
 	
 	public void bindFollowMeConfiguration(FollowMeConfiguration config, Map properties) {
         System.out.println("New Configuration");
@@ -29,12 +29,14 @@ public class FollowMeManagerImpl implements FollowMeAdministration {
 	
 	@Override
 	public void setIlluminancePreference(IlluminanceGoal illuminanceGoal) {
-		followMeConfiguration.setMaximumNumberOfLightsToTurnOn(illuminanceGoal.getNumberOfLightsToTurnOn());
+			
+			config.setMaximumNumberOfLightsToTurnOn(illuminanceGoal.getNumberOfLightsToTurnOn());
+		
 	}
 
 	@Override
 	public IlluminanceGoal getIlluminancePreference() {
-		int numberLights = followMeConfiguration.getMaximumNumberOfLightsToTurnOn();
+		int numberLights = config.getMaximumNumberOfLightsToTurnOn();
 		IlluminanceGoal goal = IlluminanceGoal.SOFT;
 		if(numberLights<=1){
 			goal = IlluminanceGoal.SOFT;
@@ -44,27 +46,6 @@ public class FollowMeManagerImpl implements FollowMeAdministration {
 		}
 		else{
 			goal = IlluminanceGoal.FULL;
-		}
-		return goal;
-	}
-
-	@Override
-	public void setEnergySavingGoal(EnergyGoal energyGoal) {
-		followMeConfiguration.setMaximumAllowedEnergyInRoom(energyGoal.getMaximumEnergyInRoom());
-	}
-
-	@Override
-	public EnergyGoal getEnergyGoal() {
-		double energyConsumption = followMeConfiguration.getMaximumAllowedEnergyInRoom();
-		EnergyGoal goal = EnergyGoal.LOW;
-		if(energyConsumption<=100d){
-			goal = EnergyGoal.LOW;
-		}
-		else if(energyConsumption<=200d){
-			goal = EnergyGoal.MEDIUM;
-		}
-		else{
-			goal = EnergyGoal.HIGH;
 		}
 		return goal;
 	}

@@ -22,21 +22,5 @@
          * @return the new illuminance preference
          */
         public IlluminanceGoal getIlluminancePreference();
-        
-        /**
-         * Sets the energy saving preference. The manager will try to adjust the
-         * energy consumption in accordance with this goal.
-         * 
-         * @param energyGoal
-         *            the new energy consumption preference
-         */
-        public void setEnergySavingGoal(EnergyGoal energyGoal);
-        
-        /**
-         * Gets the current energy goal.
-         * 
-         * @return the current energy goal.
-         */
-        public EnergyGoal getEnergyGoal();
      
     }

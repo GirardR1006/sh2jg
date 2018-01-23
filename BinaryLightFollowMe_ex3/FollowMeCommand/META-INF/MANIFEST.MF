@@ -42,23 +42,18 @@ Import-Package: fr.liglab.adele.icasa, fr.liglab.adele.icasa.access, f
  .0.0)", org.apache.felix.ipojo.architecture;version="[1.12.1,2.0.0)",
   org.example.follow.me.manager, org.json, org.osgi.service.cm;version
  =1.2, org.osgi.service.log;version=1.3
-iPOJO-Components: instance { $name="follow.me.manager.command" $compon
- ent="org.example.follow.me.manager.command.FollowMeManagerCommandImpl
- " }component { $name="org.example.follow.me.manager.command.FollowMeM
- anagerCommandImpl" $classname="org.example.follow.me.manager.command.
- FollowMeManagerCommandImpl" fr.liglab.adele.icasa.command.handler:com
- mandprovider { $namespace="followme" fr.liglab.adele.icasa.command.ha
- ndler:command { $method="setIlluminancePreference" }fr.liglab.adele.i
- casa.command.handler:command { $method="getIlluminancePreference" }fr
- .liglab.adele.icasa.command.handler:command { $method="setPowerConsum
- ptionPreference" }fr.liglab.adele.icasa.command.handler:command { $me
- thod="getPowerConsumptionPreference" }}requires { $field="m_administr
- ationService" }manipulation { $classname="org.example.follow.me.manag
- er.command.FollowMeManagerCommandImpl" field { $name="m_administratio
- nService" $type="org.example.follow.me.manager.FollowMeAdministration
- " }method { $name="setIlluminancePreference" $arguments="{java.lang.S
- tring}" $names="{goal}" }method { $name="getIlluminancePreference" }m
- ethod { $name="setPowerConsumptionPreference" $arguments="{java.lang.
- String}" $names="{goal}" }method { $name="getPowerConsumptionPreferen
- ce" }}}
+iPOJO-Components: component { $name="FollowMeCommand" }instance { $nam
+ e="follow.me.manager.command" $component="org.example.follow.me.manag
+ er.command.FollowMeManagerCommandImpl" }component { $name="org.exampl
+ e.follow.me.manager.command.FollowMeManagerCommandImpl" $classname="o
+ rg.example.follow.me.manager.command.FollowMeManagerCommandImpl" fr.l
+ iglab.adele.icasa.command.handler:commandprovider { $namespace="follo
+ wme" fr.liglab.adele.icasa.command.handler:command { $method="setIllu
+ minancePreference" }fr.liglab.adele.icasa.command.handler:command { $
+ method="getIlluminancePreference" }}requires { $field="m_administrati
+ onService" }manipulation { $classname="org.example.follow.me.manager.
+ command.FollowMeManagerCommandImpl" field { $name="m_administrationSe
+ rvice" $type="org.example.follow.me.manager.FollowMeAdministration" }
+ method { $name="setIlluminancePreference" $arguments="{java.lang.Stri
+ ng}" $names="{goal}" }method { $name="getIlluminancePreference" }}}
 

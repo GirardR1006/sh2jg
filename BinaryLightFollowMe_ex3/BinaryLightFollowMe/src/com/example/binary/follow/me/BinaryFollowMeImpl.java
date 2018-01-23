@@ -23,14 +23,7 @@ public class BinaryFollowMeImpl implements DeviceListener, FollowMeConfiguration
 	private int maxLightToTurnOnPerRoom = 3;
 	/** Field for dimmerLigths dependency */
 	private DimmerLight[] dimmerLights;
-	/** Field for maximum energy consumption */ 
-	private double maximumEnergyConsumptionAllowedInARoom = 250.0d;
-	/** Constant defining the energy consumption per light*/
-	private static final double energyConsumptionPerLight = 100.0d;
-	/** Value defining maximum number of light to be lit on if we follow power saving policy*/
-	int maxNumberOfLightForConsumption = (int) Math.floor(maximumEnergyConsumptionAllowedInARoom/energyConsumptionPerLight); 
 
-	
 	/** Bind Method for binaryLights dependency */
 	public void bindBinaryLight(BinaryLight binaryLight, Map properties) {
 		binaryLight.addListener(this); 
@@ -121,19 +114,16 @@ public class BinaryFollowMeImpl implements DeviceListener, FollowMeConfiguration
 		    System.out.println("This sensor has detected something in the room :" + detectorLocation);  
 		    // if the location is known :
 		    if (!detectorLocation.equals(LOCATION_UNKNOWN)) {
-		    	// get the related lights
-		    	// TODO: implements energy policy management: switch on as many binary lights as possible
-		    	// then switch on dimmer lights and adjust their power to reach max power consumption 
+		    	// get the related binary lights
 		    	List<BinaryLight> sameLocationBinaryLights = getBinaryLightFromLocation(detectorLocation);
 		    	List<DimmerLight> sameLocationDimmerLights = getDimmerLightFromLocation(detectorLocation);
 	    		int numberOfSwitchedOnLights = 0;
 		    	for (BinaryLight binaryLight : sameLocationBinaryLights) {
-		    		//check if some are already switched on
 		    		if (binaryLight.getPowerStatus()) {numberOfSwitchedOnLights ++;}
-		    		// and switch them on/off depending on the sensed presence, the number of lights
+		    		// and switch them on/off depending on the sensed presence and the number of lights
+		    		// already switched on
 			    	if(changingSensor.getSensedPresence()){
-			    		//and check if we already went over the maximum number of light we can switch on
-			    		if (numberOfSwitchedOnLights < Math.min(maxLightToTurnOnPerRoom,maxNumberOfLightForConsumption)) {
+			    		if (numberOfSwitchedOnLights < maxLightToTurnOnPerRoom) {
 				    			binaryLight.turnOn();
 				    			numberOfSwitchedOnLights ++;
 			    		}
@@ -147,17 +137,8 @@ public class BinaryFollowMeImpl implements DeviceListener, FollowMeConfiguration
 		    		if(dimmerLight.getPowerLevel() != 0) {numberOfSwitchedOnLights ++;}
 		    		if (changingSensor.getSensedPresence()){
 		    			if(numberOfSwitchedOnLights < maxLightToTurnOnPerRoom){
-		    				//Switch on lamp at max power if we can
-		    				if(numberOfSwitchedOnLights<maxNumberOfLightForConsumption) {
-			    				dimmerLight.setPowerLevel(1.0);
-			    				numberOfSwitchedOnLights ++;
-		    				}
-		    				//Switch on lamp to reach maximum energy consumption goal 
-		    				else {
-		    					double remainingPowerLevel=maximumEnergyConsumptionAllowedInARoom-maxNumberOfLightForConsumption*numberOfSwitchedOnLights;
-		    					dimmerLight.setPowerLevel(remainingPowerLevel);
-		    					numberOfSwitchedOnLights ++;
-		    				}
+		    				dimmerLight.setPowerLevel(1.0);
+		    				numberOfSwitchedOnLights ++;
 		    			}
 		    		}
 		    		else{
@@ -322,15 +303,6 @@ public class BinaryFollowMeImpl implements DeviceListener, FollowMeConfiguration
 	public void setMaximumNumberOfLightsToTurnOn(
 			int maximumNumberOfLightsToTurnOn) {
 		maxLightToTurnOnPerRoom=maximumNumberOfLightsToTurnOn; 
-		
-	}
-
-	public double getMaximumAllowedEnergyInRoom() {
-		return maximumEnergyConsumptionAllowedInARoom;
-	}
-
-	public void setMaximumAllowedEnergyInRoom(double maximumEnergy) {
-		maximumEnergyConsumptionAllowedInARoom=maximumEnergy;
 		
 	}
 

@@ -43,25 +43,4 @@ Import-Package: com.example.binary.follow.me.configuration, fr.liglab.
  s, org.apache.felix.ipojo;version="[1.12.1,2.0.0)", org.apache.felix.
  ipojo.architecture;version="[1.12.1,2.0.0)", org.json, org.osgi.servi
  ce.cm;version=1.2, org.osgi.service.log;version=1.3
-iPOJO-Components: instance { $component="FollowMeManager" $name="my.fi
- rst.follow.me.manager" }component { $classname="org.example.follow.me
- .manager.impl.FollowMeManagerImpl" $name="FollowMeManager" requires {
-  $specification="com.example.binary.follow.me.configuration.FollowMeC
- onfiguration" $field="followMeConfiguration" }provides { $specificati
- ons="org.example.follow.me.manager.FollowMeAdministration" }manipulat
- ion { $classname="org.example.follow.me.manager.impl.FollowMeManagerI
- mpl" interface { $name="org.example.follow.me.manager.FollowMeAdminis
- tration" }field { $name="followMeConfiguration" $type="com.example.bi
- nary.follow.me.configuration.FollowMeConfiguration" }method { $name="
- bindFollowMeConfiguration" $arguments="{com.example.binary.follow.me.
- configuration.FollowMeConfiguration,java.util.Map}" $names="{config,p
- roperties}" }method { $name="unbindFollowMeConfiguration" $arguments=
- "{com.example.binary.follow.me.configuration.FollowMeConfiguration,ja
- va.util.Map}" $names="{config,properties}" }method { $name="setIllumi
- nancePreference" $arguments="{org.example.follow.me.manager.Illuminan
- ceGoal}" $names="{illuminanceGoal}" }method { $name="getIlluminancePr
- eference" $return="org.example.follow.me.manager.IlluminanceGoal" }me
- thod { $name="setEnergySavingGoal" $arguments="{org.example.follow.me
- .manager.EnergyGoal}" $names="{energyGoal}" }method { $name="getEnerg
- yGoal" $return="org.example.follow.me.manager.EnergyGoal" }}}
 
