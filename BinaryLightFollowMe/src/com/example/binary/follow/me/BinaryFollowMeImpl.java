@@ -154,7 +154,7 @@ public class BinaryFollowMeImpl implements DeviceListener, FollowMeConfiguration
 		    				}
 		    				//Switch on lamp to reach maximum energy consumption goal 
 		    				else {
-		    					double remainingPowerLevel=maximumEnergyConsumptionAllowedInARoom-maxNumberOfLightForConsumption*numberOfSwitchedOnLights;
+		    					double remainingPowerLevel=(maximumEnergyConsumptionAllowedInARoom-maxNumberOfLightForConsumption*energyConsumptionPerLight)/100.0;
 		    					dimmerLight.setPowerLevel(remainingPowerLevel);
 		    					numberOfSwitchedOnLights ++;
 		    				}
