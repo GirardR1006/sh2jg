@@ -7,14 +7,16 @@ package org.example.follow.me.manager;
 public enum IlluminanceGoal {
  
     /** The goal associated with soft illuminance. */
-    SOFT(1),
+    SOFT(1,500d),
     /** The goal associated with medium illuminance. */
-    MEDIUM(2),
+    MEDIUM(2,2750d),
     /** The goal associated with full illuminance. */
-    FULL(3);
+    FULL(3,4000d);
  
     /** The number of lights to turn on. */
     private int numberOfLightsToTurnOn;
+    /** The targeted illuminance. */
+    private double targetedIlluminance;
  
     /**
      * Gets the number of lights to turn On.
@@ -24,6 +26,9 @@ public enum IlluminanceGoal {
     public int getNumberOfLightsToTurnOn() {
         return numberOfLightsToTurnOn;
     }
+    public double getTargetedIlluminance() {
+        return targetedIlluminance;
+    }
  
     /**
      * Instantiates a new illuminance goal.
@@ -31,7 +36,8 @@ public enum IlluminanceGoal {
      * @param numberOfLightsToTurnOn
      *            the number of lights to turn on.
      */
-    private IlluminanceGoal(int numberOfLightsToTurnOn) {
+    private IlluminanceGoal(int numberOfLightsToTurnOn, double targetedIlluminance) {
         this.numberOfLightsToTurnOn = numberOfLightsToTurnOn;
+        this.targetedIlluminance = targetedIlluminance;
     }
 }

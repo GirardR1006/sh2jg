@@ -5,7 +5,6 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-SymbolicName: FollowMeManager
 Bundle-Version: 1.0.0.qualifier
 Created-By: iPOJO 1.12.1
-Export-Package: org.example.follow.me.manager
 Import-Package: com.example.binary.follow.me.configuration, fr.liglab.
  adele.icasa, fr.liglab.adele.icasa.access, fr.liglab.adele.icasa.acce
  ss.command, fr.liglab.adele.icasa.application, fr.liglab.adele.icasa.
@@ -41,8 +40,9 @@ Import-Package: com.example.binary.follow.me.configuration, fr.liglab.
  .liglab.adele.icasa.simulator.remote.wisdom.util, fr.liglab.adele.ica
  sa.simulator.script.executor, fr.liglab.adele.icasa.simulator.service
  s, org.apache.felix.ipojo;version="[1.12.1,2.0.0)", org.apache.felix.
- ipojo.architecture;version="[1.12.1,2.0.0)", org.json, org.osgi.servi
- ce.cm;version=1.2, org.osgi.service.log;version=1.3
+ ipojo.architecture;version="[1.12.1,2.0.0)", org.example.follow.me.ma
+ nager, org.json, org.osgi.service.cm;version=1.2, org.osgi.service.lo
+ g;version=1.3
 iPOJO-Components: instance { $component="FollowMeManager" $name="my.fi
  rst.follow.me.manager" }component { $classname="org.example.follow.me
  .manager.impl.FollowMeManagerImpl" $name="FollowMeManager" requires {

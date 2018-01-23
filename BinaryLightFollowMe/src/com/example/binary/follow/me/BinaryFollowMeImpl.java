@@ -5,6 +5,8 @@ import fr.liglab.adele.icasa.device.DeviceListener;
 import fr.liglab.adele.icasa.device.GenericDevice;
 import fr.liglab.adele.icasa.device.light.BinaryLight;
 import fr.liglab.adele.icasa.device.light.DimmerLight;
+import fr.liglab.adele.icasa.device.light.Photometer;
+import fr.liglab.adele.icasa.service.zone.size.calculator.ZoneSizeCalculator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +15,7 @@ import java.util.Map;
 import com.example.binary.follow.me.configuration.FollowMeConfiguration;
 
 @SuppressWarnings("rawtypes")
-public class BinaryFollowMeImpl implements DeviceListener, FollowMeConfiguration {
+public class BinaryFollowMeImpl implements DeviceListener, FollowMeConfiguration{
 
 	/** Field for presenceSensors dependency */
 	private PresenceSensor[] presenceSensors;
@@ -23,13 +25,21 @@ public class BinaryFollowMeImpl implements DeviceListener, FollowMeConfiguration
 	private int maxLightToTurnOnPerRoom = 3;
 	/** Field for dimmerLigths dependency */
 	private DimmerLight[] dimmerLights;
+	/** Field for dimmerLigths dependency */
+	private Photometer[] photometers;
+	/**Field for ZoneSizeCalculator **/
+	private ZoneSizeCalculator zoneSizeCalculator;
+	
 	/** Field for maximum energy consumption */ 
 	private double maximumEnergyConsumptionAllowedInARoom = 250.0d;
 	/** Constant defining the energy consumption per light*/
 	private static final double energyConsumptionPerLight = 100.0d;
 	/** Value defining maximum number of light to be lit on if we follow power saving policy*/
 	int maxNumberOfLightForConsumption = (int) Math.floor(maximumEnergyConsumptionAllowedInARoom/energyConsumptionPerLight); 
-
+    /**The targeted illuminance in each room**/
+    private double targetedIlluminance = 4000.0d;
+    /**Watt to lumens conversion factor,It has been considered that: 1 Watt=680.0 lumens at 555nm.**/
+    public final static double ONE_WATT_TO_ONE_LUMEN = 680.0d;
 	
 	/** Bind Method for binaryLights dependency */
 	public void bindBinaryLight(BinaryLight binaryLight, Map properties) {
@@ -62,6 +72,16 @@ public class BinaryFollowMeImpl implements DeviceListener, FollowMeConfiguration
 	public void unbindDimmerLight(DimmerLight dimmerLight, Map properties) {
 		dimmerLight.removeListener(this);
 		System.out.println("unbind dimmer light " + dimmerLight.getSerialNumber());	}
+	
+	/** Bind Method for photometer dependency */
+	public void bindPhotometers(Photometer photometer, Map properties) {
+		photometer.addListener(this); 
+		System.out.println("bind photometer " + photometer.getSerialNumber());	}
+	
+	/** Unbind Method for photometer dependency */
+	public void unbindPhotometers(Photometer photometer, Map properties) {
+		photometer.removeListener(this); 
+		System.out.println("unbind photometer " + photometer.getSerialNumber());	}
 
 	/** Component Lifecycle Method */
 	public synchronized void stop() {
@@ -127,6 +147,8 @@ public class BinaryFollowMeImpl implements DeviceListener, FollowMeConfiguration
 		    	List<BinaryLight> sameLocationBinaryLights = getBinaryLightFromLocation(detectorLocation);
 		    	List<DimmerLight> sameLocationDimmerLights = getDimmerLightFromLocation(detectorLocation);
 	    		int numberOfSwitchedOnLights = 0;
+	    		//Value of N to calculate illuminance as seen in exercise 5
+	    		int n_illuminance = Math.min(sameLocationDimmerLights.size(), maxLightToTurnOnPerRoom);
 		    	for (BinaryLight binaryLight : sameLocationBinaryLights) {
 		    		//check if some are already switched on
 		    		if (binaryLight.getPowerStatus()) {numberOfSwitchedOnLights ++;}
@@ -144,18 +166,20 @@ public class BinaryFollowMeImpl implements DeviceListener, FollowMeConfiguration
 		    		}
 		    	}
 		    	for (DimmerLight dimmerLight : sameLocationDimmerLights){
+		    		float surfaceValueOfRoom = zoneSizeCalculator.getSurfaceInMeterSquare(detectorLocation);
+		    		double lambda = targetedIlluminance*surfaceValueOfRoom/(n_illuminance*ONE_WATT_TO_ONE_LUMEN*energyConsumptionPerLight);
 		    		if(dimmerLight.getPowerLevel() != 0) {numberOfSwitchedOnLights ++;}
 		    		if (changingSensor.getSensedPresence()){
 		    			if(numberOfSwitchedOnLights < maxLightToTurnOnPerRoom){
-		    				//Switch on lamp at max power if we can
-		    				if(numberOfSwitchedOnLights<maxNumberOfLightForConsumption) {
-			    				dimmerLight.setPowerLevel(1.0);
+		    				//Switch on lamp at max power if we can, while following illuminance target
+		    				if(numberOfSwitchedOnLights<maxNumberOfLightForConsumption) {  
+			    				dimmerLight.setPowerLevel(lambda);
 			    				numberOfSwitchedOnLights ++;
 		    				}
 		    				//Switch on lamp to reach maximum energy consumption goal 
 		    				else {
-		    					double remainingPowerLevel=(maximumEnergyConsumptionAllowedInARoom-maxNumberOfLightForConsumption*energyConsumptionPerLight)/100.0;
-		    					dimmerLight.setPowerLevel(remainingPowerLevel);
+		    					double remainingPowerLevel=(maximumEnergyConsumptionAllowedInARoom-maxNumberOfLightForConsumption*energyConsumptionPerLight)/100.0; 
+		    					dimmerLight.setPowerLevel(Math.min(lambda,remainingPowerLevel));
 		    					numberOfSwitchedOnLights ++;
 		    				}
 		    			}
@@ -332,6 +356,14 @@ public class BinaryFollowMeImpl implements DeviceListener, FollowMeConfiguration
 	public void setMaximumAllowedEnergyInRoom(double maximumEnergy) {
 		maximumEnergyConsumptionAllowedInARoom=maximumEnergy;
 		
+	}
+
+	public double getTargetedIlluminance() {
+		return targetedIlluminance;
+	}
+
+	public void setTargetedIlluminance(double illuminance) {
+		targetedIlluminance=illuminance;		
 	}
 
 }

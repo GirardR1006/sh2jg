@@ -16,6 +16,11 @@
       <callback method="unbindDimmerLight" type="unbind"/>
     </requires>
     <provides specifications="com.example.binary.follow.me.configuration.FollowMeConfiguration"/>
+    <requires aggregate="true" optional="true" specification="fr.liglab.adele.icasa.device.light.Photometer" field="photometers">
+      <callback method="bindPhotometers" type="bind"/>
+      <callback method="unbindPhotometers" type="unbind"/>
+    </requires>
+    <requires specification="fr.liglab.adele.icasa.service.zone.size.calculator.ZoneSizeCalculator" field="zoneSizeCalculator"/>
   </component>
   <instance component="BinaryFollowMe" name="my.first.follow.me"/>
 </ipojo>

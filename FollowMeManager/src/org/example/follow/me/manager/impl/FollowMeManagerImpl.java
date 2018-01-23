@@ -30,6 +30,7 @@ public class FollowMeManagerImpl implements FollowMeAdministration {
 	@Override
 	public void setIlluminancePreference(IlluminanceGoal illuminanceGoal) {
 		followMeConfiguration.setMaximumNumberOfLightsToTurnOn(illuminanceGoal.getNumberOfLightsToTurnOn());
+		followMeConfiguration.setTargetedIlluminance(illuminanceGoal.getTargetedIlluminance());
 	}
 
 	@Override
