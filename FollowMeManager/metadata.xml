@@ -3,6 +3,8 @@
   <component classname="org.example.follow.me.manager.impl.FollowMeManagerImpl" name="FollowMeManager">
     <requires specification="com.example.binary.follow.me.configuration.FollowMeConfiguration" field="followMeConfiguration"/>
     <provides specifications="org.example.follow.me.manager.FollowMeAdministration"/>
+    <requires specification="fr.liglab.adele.icasa.service.preferences.Preferences" field="preferencesService"/>
+    <requires specification="fr.liglab.adele.icasa.service.location.PersonLocationService" field="personLocationService"/>
   </component>
   <instance component="FollowMeManager" name="my.first.follow.me.manager"/>
 </ipojo>

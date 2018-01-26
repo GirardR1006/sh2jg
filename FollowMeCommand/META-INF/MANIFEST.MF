@@ -53,12 +53,14 @@ iPOJO-Components: instance { $name="follow.me.manager.command" $compon
  .liglab.adele.icasa.command.handler:command { $method="setPowerConsum
  ptionPreference" }fr.liglab.adele.icasa.command.handler:command { $me
  thod="getPowerConsumptionPreference" }}requires { $field="m_administr
- ationService" }manipulation { $classname="org.example.follow.me.manag
- er.command.FollowMeManagerCommandImpl" field { $name="m_administratio
- nService" $type="org.example.follow.me.manager.FollowMeAdministration
+ ationService" }requires { $field="preferencesService" }manipulation {
+  $classname="org.example.follow.me.manager.command.FollowMeManagerCom
+ mandImpl" field { $name="m_administrationService" $type="org.example.
+ follow.me.manager.FollowMeAdministration" }field { $name="preferences
+ Service" $type="fr.liglab.adele.icasa.service.preferences.Preferences
  " }method { $name="setIlluminancePreference" $arguments="{java.lang.S
- tring}" $names="{goal}" }method { $name="getIlluminancePreference" }m
- ethod { $name="setPowerConsumptionPreference" $arguments="{java.lang.
- String}" $names="{goal}" }method { $name="getPowerConsumptionPreferen
- ce" }}}
+ tring,java.lang.String}" $names="{goal,user}" }method { $name="getIll
+ uminancePreference" }method { $name="setPowerConsumptionPreference" $
+ arguments="{java.lang.String}" $names="{goal}" }method { $name="getPo
+ werConsumptionPreference" }}}
 

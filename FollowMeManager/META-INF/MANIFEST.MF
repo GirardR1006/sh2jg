@@ -47,21 +47,37 @@ iPOJO-Components: instance { $component="FollowMeManager" $name="my.fi
  rst.follow.me.manager" }component { $classname="org.example.follow.me
  .manager.impl.FollowMeManagerImpl" $name="FollowMeManager" requires {
   $specification="com.example.binary.follow.me.configuration.FollowMeC
- onfiguration" $field="followMeConfiguration" }provides { $specificati
- ons="org.example.follow.me.manager.FollowMeAdministration" }manipulat
- ion { $classname="org.example.follow.me.manager.impl.FollowMeManagerI
- mpl" interface { $name="org.example.follow.me.manager.FollowMeAdminis
- tration" }field { $name="followMeConfiguration" $type="com.example.bi
- nary.follow.me.configuration.FollowMeConfiguration" }method { $name="
- bindFollowMeConfiguration" $arguments="{com.example.binary.follow.me.
- configuration.FollowMeConfiguration,java.util.Map}" $names="{config,p
- roperties}" }method { $name="unbindFollowMeConfiguration" $arguments=
- "{com.example.binary.follow.me.configuration.FollowMeConfiguration,ja
- va.util.Map}" $names="{config,properties}" }method { $name="setIllumi
- nancePreference" $arguments="{org.example.follow.me.manager.Illuminan
- ceGoal}" $names="{illuminanceGoal}" }method { $name="getIlluminancePr
- eference" $return="org.example.follow.me.manager.IlluminanceGoal" }me
- thod { $name="setEnergySavingGoal" $arguments="{org.example.follow.me
- .manager.EnergyGoal}" $names="{energyGoal}" }method { $name="getEnerg
- yGoal" $return="org.example.follow.me.manager.EnergyGoal" }}}
+ onfiguration" $field="followMeConfiguration" }requires { $specificati
+ on="fr.liglab.adele.icasa.service.preferences.Preferences" $field="pr
+ eferencesService" }requires { $specification="fr.liglab.adele.icasa.s
+ ervice.location.PersonLocationService" $field="personLocationService"
+  }provides { $specifications="org.example.follow.me.manager.FollowMeA
+ dministration" }manipulation { $classname="org.example.follow.me.mana
+ ger.impl.FollowMeManagerImpl" interface { $name="org.example.follow.m
+ e.manager.FollowMeAdministration" }field { $name="followMeConfigurati
+ on" $type="com.example.binary.follow.me.configuration.FollowMeConfigu
+ ration" }field { $name="personLocationService" $type="fr.liglab.adele
+ .icasa.service.location.PersonLocationService" }field { $name="prefer
+ encesService" $type="fr.liglab.adele.icasa.service.preferences.Prefer
+ ences" }method { $name="bindFollowMeConfiguration" $arguments="{com.e
+ xample.binary.follow.me.configuration.FollowMeConfiguration,java.util
+ .Map}" $names="{config,properties}" }method { $name="unbindFollowMeCo
+ nfiguration" $arguments="{com.example.binary.follow.me.configuration.
+ FollowMeConfiguration,java.util.Map}" $names="{config,properties}" }m
+ ethod { $name="bindPreferencesService" $arguments="{fr.liglab.adele.i
+ casa.service.preferences.Preferences,java.util.Map}" $names="{config,
+ properties}" }method { $name="unbindPreferencesService" $arguments="{
+ fr.liglab.adele.icasa.service.preferences.Preferences,java.util.Map}"
+  $names="{config,properties}" }method { $name="bindPersonLocationServ
+ ice" $arguments="{fr.liglab.adele.icasa.service.location.PersonLocati
+ onService,java.util.Map}" $names="{config,properties}" }method { $nam
+ e="unbindPersonLocationService" $arguments="{fr.liglab.adele.icasa.se
+ rvice.location.PersonLocationService,java.util.Map}" $names="{config,
+ properties}" }method { $name="setIlluminancePreference" $arguments="{
+ org.example.follow.me.manager.IlluminanceGoal}" $names="{illuminanceG
+ oal}" }method { $name="getIlluminancePreference" $return="org.example
+ .follow.me.manager.IlluminanceGoal" }method { $name="setEnergySavingG
+ oal" $arguments="{org.example.follow.me.manager.EnergyGoal}" $names="
+ {energyGoal}" }method { $name="getEnergyGoal" $return="org.example.fo
+ llow.me.manager.EnergyGoal" }}}
 

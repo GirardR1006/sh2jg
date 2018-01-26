@@ -9,6 +9,7 @@
      
     import fr.liglab.adele.icasa.command.handler.Command;
     import fr.liglab.adele.icasa.command.handler.CommandProvider;
+import fr.liglab.adele.icasa.service.preferences.Preferences;
      
     //Define this class as an implementation of a component :
     @Component
@@ -22,39 +23,55 @@
         // Declare a dependency to a FollowMeAdministration service
         @Requires
         private FollowMeAdministration m_administrationService;
-     
+        // Declare a dependency to a preference service
+        @Requires
+        private Preferences preferencesService;
+
      
         /**
          * Felix shell command implementation to sets the illuminance preference.
          *
-         * @param goal the new illuminance preference ("SOFT", "MEDIUM", "FULL")
+         * @param   user the name of the user you want to set preference
+         * 			goal the new illuminance preference ("SOFT", "MEDIUM", "FULL")
          */
+        
+        /**User preferences for illuminance**/
+        public static final String USER_PROP_ILLUMINANCE = "illuminance";
+        public static final String USER_PROP_ILLUMINANCE_VALUE_SOFT = "SOFT";
+        public static final String USER_PROP_ILLUMINANCE_VALUE_MEDIUM = "MEDIUM";
+        public static final String USER_PROP_ILLUMINANCE_VALUE_FULL = "FULL";
      
         // Each command should start with a @Command annotation
         @Command
-        public void setIlluminancePreference(String goal) {
+        public void setIlluminancePreference(String goal, String user) {
             // The targeted goal
             IlluminanceGoal illuminanceGoal=IlluminanceGoal.FULL;
-     
-            // Here you have to convert the goal string into an illuminance
-            // goal and fail if the entry is not "SOFT", "MEDIUM" or "HIGH"
+            String userIlluminance = USER_PROP_ILLUMINANCE_VALUE_FULL;
+            // Here you have to convert the goal string into an user preference
+            // goal and fail if the entry is not "SOFT", "MEDIUM" or "HIGH".
+            //Else, return a global illuminance goal
             if (goal.equals("MEDIUM")){
-            	illuminanceGoal= IlluminanceGoal.MEDIUM;
+           		illuminanceGoal= IlluminanceGoal.MEDIUM;
+           		userIlluminance=USER_PROP_ILLUMINANCE_VALUE_MEDIUM;
+           	}
+           	else if (goal.equals("SOFT")){
+           		illuminanceGoal= IlluminanceGoal.SOFT;
+           		userIlluminance=USER_PROP_ILLUMINANCE_VALUE_SOFT;
+           	}
+           	else if (goal.equals("FULL")){
+           		illuminanceGoal= IlluminanceGoal.FULL;
+           		userIlluminance=USER_PROP_ILLUMINANCE_VALUE_FULL;
+           	}
+           	else{
+           		System.out.println("Error, enter SOFT, FULL or MEDIUM.");
+           	}
+            if (user.equals("Julien")){
+            	//call the administration service to configure it :
+            	preferencesService.setUserPropertyValue(user, USER_PROP_ILLUMINANCE, userIlluminance);
             }
-            else if (goal.equals("SOFT")){
-            	illuminanceGoal= IlluminanceGoal.SOFT;
+            else {
+            	m_administrationService.setIlluminancePreference(illuminanceGoal);
             }
-            else if (goal.equals("FULL")){
-            	illuminanceGoal= IlluminanceGoal.SOFT;
-            }
-            else{
-            	System.out.println("Error, enter SOFT, FULL or MEDIUM.");
-            }
-           
-            
-     
-            //call the administration service to configure it :
-            m_administrationService.setIlluminancePreference(illuminanceGoal);
         }
      
         @Command

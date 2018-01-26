@@ -9,42 +9,76 @@ import org.example.follow.me.manager.IlluminanceGoal;
 
 import com.example.binary.follow.me.configuration.FollowMeConfiguration;
 
+import fr.liglab.adele.icasa.service.location.PersonLocationService;
+import fr.liglab.adele.icasa.service.preferences.Preferences;
+
 @SuppressWarnings("rawtypes") 
 public class FollowMeManagerImpl implements FollowMeAdministration {
+	
+    /**User preferences for illuminance**/
+    public static final String USER_PROP_ILLUMINANCE = "illuminance";
+    public static final String USER_PROP_ILLUMINANCE_VALUE_SOFT = "SOFT";
+    public static final String USER_PROP_ILLUMINANCE_VALUE_MEDIUM = "MEDIUM";
+    public static final String USER_PROP_ILLUMINANCE_VALUE_FULL = "FULL";
 
 	// Declare a dependency to a FollowMeConfiguration service
     private FollowMeConfiguration followMeConfiguration;
-	
+	// Declare a dependency to a Preferences service
+    private Preferences preferencesService;
+	// Declare a dependency to a PersonLocation service
+    private PersonLocationService personLocationService;
+    
 	public void bindFollowMeConfiguration(FollowMeConfiguration config, Map properties) {
         System.out.println("New Configuration");
     }
- 
 	public void unbindFollowMeConfiguration(FollowMeConfiguration config, Map properties) {
         System.out.println("Stopping configuration");
     }
-	
-	/** TODO write a manager so that the number of lights is adjusted depending on a targeted goal
-	 * 
-	 */
+	public void bindPreferencesService(Preferences config, Map properties) {
+        System.out.println("New preferences");
+    }
+	public void unbindPreferencesService(Preferences config, Map properties) {
+        System.out.println("Stopping preferences");
+    }	
+	public void bindPersonLocationService(PersonLocationService config, Map properties) {
+        System.out.println("New person location service");
+    }
+	public void unbindPersonLocationService(PersonLocationService config, Map properties) {
+        System.out.println("Stopping person location service");
+    }	
 	
 	@Override
 	public void setIlluminancePreference(IlluminanceGoal illuminanceGoal) {
 		followMeConfiguration.setMaximumNumberOfLightsToTurnOn(illuminanceGoal.getNumberOfLightsToTurnOn());
 		followMeConfiguration.setTargetedIlluminance(illuminanceGoal.getTargetedIlluminance());
 	}
-
+	//TODO: Get illuminance preference of user, rather than a general one
+        //Need to check who is in the flat, if empty choose default
 	@Override
 	public IlluminanceGoal getIlluminancePreference() {
 		int numberLights = followMeConfiguration.getMaximumNumberOfLightsToTurnOn();
+	    String julienIlm = (String) preferencesService.getUserPropertyValue("Julien", USER_PROP_ILLUMINANCE);
+
 		IlluminanceGoal goal = IlluminanceGoal.SOFT;
-		if(numberLights<=1){
+		if(julienIlm.equals(USER_PROP_ILLUMINANCE_VALUE_SOFT)){
 			goal = IlluminanceGoal.SOFT;
 		}
-		else if(numberLights == 2){
+		else if(julienIlm.equals(USER_PROP_ILLUMINANCE_VALUE_MEDIUM)){
 			goal = IlluminanceGoal.MEDIUM;
 		}
-		else{
+		else if(julienIlm.equals(USER_PROP_ILLUMINANCE_VALUE_FULL)){
 			goal = IlluminanceGoal.FULL;
+		}
+		else {
+			if(numberLights<=1){
+				goal = IlluminanceGoal.SOFT;
+			}
+			else if(numberLights==2){
+				goal = IlluminanceGoal.MEDIUM;
+			}
+			else if(numberLights>2) {
+				goal = IlluminanceGoal.MEDIUM;
+			}
 		}
 		return goal;
 	}
