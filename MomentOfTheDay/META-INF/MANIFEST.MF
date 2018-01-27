@@ -1,12 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: BinaryLightInterfaces
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Bundle-SymbolicName: BinaryLightInterfaces
+Bundle-Name: MomentOfTheDay
+Bundle-SymbolicName: MomentOfTheDay
 Bundle-Version: 1.0.0.qualifier
 Created-By: iPOJO 1.12.1
-Export-Package: com.example.binary.follow.me.configuration,org.example
- .follow.me.manager,org.example.time
 Import-Package: fr.liglab.adele.icasa, fr.liglab.adele.icasa.access, f
  r.liglab.adele.icasa.access.command, fr.liglab.adele.icasa.applicatio
  n, fr.liglab.adele.icasa.application.impl, fr.liglab.adele.icasa.appl
@@ -42,7 +39,9 @@ Import-Package: fr.liglab.adele.icasa, fr.liglab.adele.icasa.access, f
  util, fr.liglab.adele.icasa.simulator.script.executor, fr.liglab.adel
  e.icasa.simulator.services, org.apache.felix.ipojo;version="[1.12.1,2
  .0.0)", org.apache.felix.ipojo.architecture;version="[1.12.1,2.0.0)",
-  org.json, org.osgi.service.cm;version=1.2, org.osgi.service.log;vers
- ion=1.3
-iPOJO-Components: component { $name="BinaryLightInterfaces" }
+  org.example.time, org.json, org.osgi.service.cm;version=1.2, org.osg
+ i.service.log;version=1.3
+iPOJO-Components: component { $name="MomentOfTheDay" provides { $speci
+ fications="fr.liglab.adele.icasa.service.scheduler.PeriodicRunnable" 
+ }}
 

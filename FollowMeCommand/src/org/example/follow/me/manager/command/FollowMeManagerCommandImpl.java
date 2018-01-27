@@ -114,8 +114,12 @@ import fr.liglab.adele.icasa.service.preferences.Preferences;
     	    	else if (userPref.equals("MEDIUM")){
     	    		illuminanceGoal=IlluminanceGoal.MEDIUM;
     	    	}
-    	    	else{
+    	    	else if (userPref.equals("FULL")){
     	    		illuminanceGoal=IlluminanceGoal.FULL;
+    	    	}
+    	    	else{
+    	    		//default if no information
+    	    		illuminanceGoal=IlluminanceGoal.SOFT;
     	    	}
     	    }
     	    
