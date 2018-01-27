@@ -1,10 +1,12 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: FollowMeCommand
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Bundle-SymbolicName: FollowMeCommand
+Bundle-Name: BinaryLightInterfaces
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-SymbolicName: BinaryLightInterfaces
 Bundle-Version: 1.0.0.qualifier
 Created-By: iPOJO 1.12.1
+Export-Package: com.example.binary.follow.me.configuration, org.exampl
+ e.follow.me.manager
 Import-Package: fr.liglab.adele.icasa, fr.liglab.adele.icasa.access, f
  r.liglab.adele.icasa.access.command, fr.liglab.adele.icasa.applicatio
  n, fr.liglab.adele.icasa.application.impl, fr.liglab.adele.icasa.appl
@@ -40,29 +42,7 @@ Import-Package: fr.liglab.adele.icasa, fr.liglab.adele.icasa.access, f
  util, fr.liglab.adele.icasa.simulator.script.executor, fr.liglab.adel
  e.icasa.simulator.services, org.apache.felix.ipojo;version="[1.12.1,2
  .0.0)", org.apache.felix.ipojo.architecture;version="[1.12.1,2.0.0)",
-  org.example.follow.me.manager, org.json, org.osgi.service.cm;version
- =1.2, org.osgi.service.log;version=1.3
-iPOJO-Components: instance { $name="follow.me.manager.command" $compon
- ent="org.example.follow.me.manager.command.FollowMeManagerCommandImpl
- " }component { $name="org.example.follow.me.manager.command.FollowMeM
- anagerCommandImpl" $classname="org.example.follow.me.manager.command.
- FollowMeManagerCommandImpl" fr.liglab.adele.icasa.command.handler:com
- mandprovider { $namespace="followme" fr.liglab.adele.icasa.command.ha
- ndler:command { $method="setIlluminancePreference" }fr.liglab.adele.i
- casa.command.handler:command { $method="getIlluminancePreference" }fr
- .liglab.adele.icasa.command.handler:command { $method="setPowerConsum
- ptionPreference" }fr.liglab.adele.icasa.command.handler:command { $me
- thod="getPowerConsumptionPreference" }}requires { $field="m_administr
- ationService" }requires { $field="preferencesService" }requires { $fi
- eld="personLocationService" }manipulation { $classname="org.example.f
- ollow.me.manager.command.FollowMeManagerCommandImpl" field { $name="m
- _administrationService" $type="org.example.follow.me.manager.FollowMe
- Administration" }field { $name="personLocationService" $type="fr.ligl
- ab.adele.icasa.service.location.PersonLocationService" }field { $name
- ="preferencesService" $type="fr.liglab.adele.icasa.service.preference
- s.Preferences" }method { $name="setIlluminancePreference" $arguments=
- "{java.lang.String,java.lang.String}" $names="{goal,user}" }method { 
- $name="getIlluminancePreference" }method { $name="setPowerConsumption
- Preference" $arguments="{java.lang.String}" $names="{goal}" }method {
-  $name="getPowerConsumptionPreference" }}}
+  org.json, org.osgi.service.cm;version=1.2, org.osgi.service.log;vers
+ ion=1.3
+iPOJO-Components: component { $name="BinaryLightInterfaces" }
 
