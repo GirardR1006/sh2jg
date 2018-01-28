@@ -1,6 +1,6 @@
-    package org.example.follow.me.manager.command;
+package org.example.follow.me.manager.command;
      
-    import java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -9,11 +9,14 @@ import java.util.Set;
 import org.apache.felix.ipojo.annotations.Component;
 import org.apache.felix.ipojo.annotations.Instantiate;
 import org.apache.felix.ipojo.annotations.Requires;
+import org.example.follow.me.manager.EnergyGoal;
 import org.example.follow.me.manager.FollowMeAdministration;
 import org.example.follow.me.manager.IlluminanceGoal;
-import org.example.follow.me.manager.EnergyGoal;
-     
-    import fr.liglab.adele.icasa.command.handler.Command;
+import org.example.time.MomentOfTheDay;
+import org.example.time.MomentOfTheDayService;
+
+
+import fr.liglab.adele.icasa.command.handler.Command;
 import fr.liglab.adele.icasa.command.handler.CommandProvider;
 import fr.liglab.adele.icasa.service.location.PersonLocationService;
 import fr.liglab.adele.icasa.service.preferences.Preferences;
@@ -36,7 +39,9 @@ import fr.liglab.adele.icasa.service.preferences.Preferences;
         @Requires
     	// Declare a dependency to a PersonLocation service
         private PersonLocationService personLocationService;
-
+        @Requires
+    	// Declare a dependency to a MomentOfDay service
+        private MomentOfTheDayService momentOfDayService;
      
         /**
          * Felix shell command implementation to sets the illuminance preference.
@@ -186,6 +191,25 @@ import fr.liglab.adele.icasa.service.preferences.Preferences;
             }
             else if(energGoal.equals(EnergyGoal.LOW)){
             	System.out.println("LOW");
+            }
+            else{
+            	System.out.println("Error");
+            }
+        }
+        
+        @Command
+        public void getMomentOfDay(){
+            // implement the command that print the current moment of day
+            System.out.println("The current moment of day is "); 
+            MomentOfTheDay now = momentOfDayService.getMomentOfTheDay();
+            if(now.equals(MomentOfTheDay.NIGHT)){
+            	System.out.println("NIGHT");
+            }
+            else if(now.equals(MomentOfTheDay.MORNING)){
+            	System.out.println("MORNING");
+            }
+            else if(now.equals(MomentOfTheDay.AFTERNOON)){
+            	System.out.println("AFTERNOON");
             }
             else{
             	System.out.println("Error");

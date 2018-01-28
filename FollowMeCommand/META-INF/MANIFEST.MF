@@ -40,8 +40,8 @@ Import-Package: fr.liglab.adele.icasa, fr.liglab.adele.icasa.access, f
  util, fr.liglab.adele.icasa.simulator.script.executor, fr.liglab.adel
  e.icasa.simulator.services, org.apache.felix.ipojo;version="[1.12.1,2
  .0.0)", org.apache.felix.ipojo.architecture;version="[1.12.1,2.0.0)",
-  org.example.follow.me.manager, org.json, org.osgi.service.cm;version
- =1.2, org.osgi.service.log;version=1.3
+  org.example.follow.me.manager, org.example.time, org.json, org.osgi.
+ service.cm;version=1.2, org.osgi.service.log;version=1.3
 iPOJO-Components: instance { $name="follow.me.manager.command" $compon
  ent="org.example.follow.me.manager.command.FollowMeManagerCommandImpl
  " }component { $name="org.example.follow.me.manager.command.FollowMeM
@@ -52,17 +52,20 @@ iPOJO-Components: instance { $name="follow.me.manager.command" $compon
  casa.command.handler:command { $method="getIlluminancePreference" }fr
  .liglab.adele.icasa.command.handler:command { $method="setPowerConsum
  ptionPreference" }fr.liglab.adele.icasa.command.handler:command { $me
- thod="getPowerConsumptionPreference" }}requires { $field="m_administr
- ationService" }requires { $field="preferencesService" }requires { $fi
- eld="personLocationService" }manipulation { $classname="org.example.f
- ollow.me.manager.command.FollowMeManagerCommandImpl" field { $name="m
- _administrationService" $type="org.example.follow.me.manager.FollowMe
- Administration" }field { $name="personLocationService" $type="fr.ligl
- ab.adele.icasa.service.location.PersonLocationService" }field { $name
- ="preferencesService" $type="fr.liglab.adele.icasa.service.preference
- s.Preferences" }method { $name="setIlluminancePreference" $arguments=
- "{java.lang.String,java.lang.String}" $names="{goal,user}" }method { 
- $name="getIlluminancePreference" }method { $name="setPowerConsumption
- Preference" $arguments="{java.lang.String}" $names="{goal}" }method {
-  $name="getPowerConsumptionPreference" }}}
+ thod="getPowerConsumptionPreference" }fr.liglab.adele.icasa.command.h
+ andler:command { $method="getMomentOfDay" }}requires { $field="m_admi
+ nistrationService" }requires { $field="preferencesService" }requires 
+ { $field="personLocationService" }requires { $field="momentOfDayServi
+ ce" }manipulation { $classname="org.example.follow.me.manager.command
+ .FollowMeManagerCommandImpl" field { $name="m_administrationService" 
+ $type="org.example.follow.me.manager.FollowMeAdministration" }field {
+  $name="momentOfDayService" $type="org.example.time.MomentOfTheDaySer
+ vice" }field { $name="personLocationService" $type="fr.liglab.adele.i
+ casa.service.location.PersonLocationService" }field { $name="preferen
+ cesService" $type="fr.liglab.adele.icasa.service.preferences.Preferen
+ ces" }method { $name="setIlluminancePreference" $arguments="{java.lan
+ g.String,java.lang.String}" $names="{goal,user}" }method { $name="get
+ IlluminancePreference" }method { $name="setPowerConsumptionPreference
+ " $arguments="{java.lang.String}" $names="{goal}" }method { $name="ge
+ tPowerConsumptionPreference" }method { $name="getMomentOfDay" }}}
 

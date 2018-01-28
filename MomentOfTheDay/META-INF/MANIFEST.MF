@@ -41,7 +41,20 @@ Import-Package: fr.liglab.adele.icasa, fr.liglab.adele.icasa.access, f
  .0.0)", org.apache.felix.ipojo.architecture;version="[1.12.1,2.0.0)",
   org.example.time, org.json, org.osgi.service.cm;version=1.2, org.osg
  i.service.log;version=1.3
-iPOJO-Components: component { $name="MomentOfTheDay" provides { $speci
- fications="fr.liglab.adele.icasa.service.scheduler.PeriodicRunnable" 
- }}
+iPOJO-Components: instance { $component="MomentOfTheDay" $name="my.mom
+ ent.of.day" }component { $classname="org.example.time.MomentOfTheDayI
+ mpl" $name="MomentOfTheDay" provides { $specifications="fr.liglab.ade
+ le.icasa.service.scheduler.PeriodicRunnable" }provides { $specificati
+ ons="org.example.time.MomentOfTheDayService" }requires { $specificati
+ on="fr.liglab.adele.icasa.clockservice.Clock" $field="clock" }manipul
+ ation { $classname="org.example.time.MomentOfTheDayImpl" interface { 
+ $name="org.example.time.MomentOfTheDayService" }interface { $name="fr
+ .liglab.adele.icasa.service.scheduler.PeriodicRunnable" }field { $nam
+ e="clock" $type="fr.liglab.adele.icasa.clockservice.Clock" }field { $
+ name="currentMomentOfTheDay" $type="org.example.time.MomentOfTheDay" 
+ }method { $name="getMomentOfTheDay" $return="org.example.time.MomentO
+ fTheDay" }method { $name="getPeriod" $return="long" }method { $name="
+ getUnit" $return="java.util.concurrent.TimeUnit" }method { $name="run
+ " }method { $name="convertMilliInHours" $return="int" $arguments="{do
+ uble}" $names="{milli}" }}}
 

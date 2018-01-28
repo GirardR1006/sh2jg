@@ -3,6 +3,9 @@ package org.example.time;
 import java.util.concurrent.TimeUnit;
 
 import fr.liglab.adele.icasa.service.scheduler.PeriodicRunnable;
+import fr.liglab.adele.icasa.clockservice.Clock;
+
+import org.example.time.MomentOfTheDay;
 
 public class MomentOfTheDayImpl implements MomentOfTheDayService, PeriodicRunnable{
     
@@ -10,11 +13,14 @@ public class MomentOfTheDayImpl implements MomentOfTheDayService, PeriodicRunnab
     * The current moment of the day :
     **/
     MomentOfTheDay currentMomentOfTheDay;
- 
+    /**
+     * The clock of iCasa Service :
+     **/
+    Clock clock;
     // Implementation of the MomentOfTheDayService ....
  
     public MomentOfTheDay getMomentOfTheDay(){
-		return null;
+		return currentMomentOfTheDay;
  
     }
  
@@ -30,14 +36,18 @@ public class MomentOfTheDayImpl implements MomentOfTheDayService, PeriodicRunnab
     }
     
     public void run() {
-        // TODO: J'ai pas compris ici ! The method run is called on a regular basis
-    	currentMomentOfTheDay.compareTo(getMomentOfTheDay());
-    	
-    	
-    	//currentMomentOfTheDay.getCorrespondingMoment(hour)		
-    			// TODO : do something to check the current time of the day and see if
-        // it has changed
+        //The method run is called on a regular basis
+    	int currentHour = convertMilliInHours(clock.currentTimeMillis());
+    	MomentOfTheDay now = currentMomentOfTheDay.getCorrespondingMoment(currentHour); 
+    	if(now.compareTo(currentMomentOfTheDay)!=0) {
+    		currentMomentOfTheDay=now;
+    	}
  
     }
- 
+    private int convertMilliInHours(double milli) {
+    	int oneSecondInMillis = 1000;
+    	int oneHourInSeconds=3600;
+    	int oneDayInHours = 23;
+    	return (int) (milli/(oneSecondInMillis*oneHourInSeconds*oneDayInHours)%24); //modulo
+    }
 }
