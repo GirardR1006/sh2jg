@@ -10,7 +10,7 @@
          *            the given hour
          * @return the corresponding moment of the day
          */
-        MomentOfTheDay getCorrespondingMoment(int hour) {
+        public MomentOfTheDay getCorrespondingMoment(int hour) {
             assert ((0 <= startHour) && (startHour <= 24));
             MomentOfTheDay moment = MomentOfTheDay.NIGHT;
             

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ipojo xmlns="org.apache.felix.ipojo">
-  <component classname="org.example.time.MomentOfTheDayImpl" name="MomentOfTheDay">
+  <component classname="org.example.time.impl.MomentOfTheDayImpl" name="MomentOfTheDay">
     <provides specifications="fr.liglab.adele.icasa.service.scheduler.PeriodicRunnable"/>
     <requires specification="fr.liglab.adele.icasa.clockservice.Clock" field="clock"/>
     <provides specifications="org.example.time.MomentOfTheDayService"/>
