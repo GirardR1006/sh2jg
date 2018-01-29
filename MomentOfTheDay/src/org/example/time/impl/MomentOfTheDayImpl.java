@@ -20,10 +20,13 @@ public class MomentOfTheDayImpl implements MomentOfTheDayService, PeriodicRunnab
      **/
     Clock clock;
     // Implementation of the MomentOfTheDayService ....
- 
+    // WARNING: iCasa takes a factor to speed up its elapsed time
+    // This only works with "Factor" in iCasa GUI manager equals 3600
     public MomentOfTheDay getMomentOfTheDay(){
-    	int currentHour = convertMilliInHours(clock.currentTimeMillis());
-    	return(currentMomentOfTheDay.getCorrespondingMoment(currentHour));  
+    	int currentHour = convertMilliInHours(clock.getElapsedTime());
+    	System.out.println(currentHour);    	
+    	System.out.println(clock.getElapsedTime());
+    	return(MomentOfTheDay.getCorrespondingMoment(currentHour));
     }
  
     // Implementation ot the PeriodicRunnable ...
@@ -39,18 +42,17 @@ public class MomentOfTheDayImpl implements MomentOfTheDayService, PeriodicRunnab
     
     public void run() {
         //The method run is called on a regular basis
-    	int currentHour = convertMilliInHours(clock.currentTimeMillis());
-    	MomentOfTheDay now = currentMomentOfTheDay.getCorrespondingMoment(currentHour); 
-    	if(now.compareTo(currentMomentOfTheDay)!=0) {
-    		currentMomentOfTheDay=now;
-    	}
+    	//int currentHour = convertMilliInHours(clock.currentTimeMillis());
+    	//MomentOfTheDay now = currentMomentOfTheDay.getCorrespondingMoment(currentHour); 
+    	//if(now.compareTo(currentMomentOfTheDay)!=0) {
+    	//	currentMomentOfTheDay=now;
+    	//}
  
     }
     protected int convertMilliInHours(double milli) {
     	int oneSecondInMillis = 1000;
     	int oneHourInSeconds=3600;
-    	int oneDayInHours = 23;
-    	return (int) (milli/(oneSecondInMillis*oneHourInSeconds*oneDayInHours)%24); //modulo
+    	return (int) (milli/(oneSecondInMillis*oneHourInSeconds)%24); //modulo
     }
 
 
